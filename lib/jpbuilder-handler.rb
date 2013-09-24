@@ -3,7 +3,7 @@ require "jbuilder"
 class JPbuilderHandler
   cattr_accessor :default_format, :default_callback
   self.default_format = Mime::JSON
-  self.default_callback = nil
+  self.default_callback = ")]}',\n"
 
   def self.call(template)
     %{
@@ -15,7 +15,7 @@ class JPbuilderHandler
         end
         callback = params[:callback] || JPbuilderHandler.default_callback
         if callback.present?
-          "\#{callback}(\#{result});"
+          "\#{callback}\#{result}"
         else
           result
         end
